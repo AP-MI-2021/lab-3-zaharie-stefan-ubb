@@ -1,7 +1,7 @@
 def print_menu():
     menu = """
 Meniu:
-m. Afișare meniu
+m. Afișare meniu.
 x. Ieșire.
     """
 
