@@ -1,9 +1,9 @@
 from math import sqrt
 from itertools import islice, count
 
+
 def is_prime(num: int) -> bool:
     """Determină dacă numărul dat este prim."""
-
     if num < 2:
         return False
 
@@ -23,7 +23,7 @@ def test_is_prime():
     assert is_prime(6) is False
 
 
-def input_data():
+def input_list():
     raw_data = input("Introduceți o listă de numere: ")
     str_list = raw_data.split()
 
@@ -63,7 +63,7 @@ def main():
         elif option == "x":
             break
         elif option == "i":
-            lst = input_data()
+            lst = input_list()
 
         else:
             print("Opțiune inexistentă!")
