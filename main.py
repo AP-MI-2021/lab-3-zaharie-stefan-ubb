@@ -52,6 +52,43 @@ def test_get_longest_all_primes():
     assert get_longest_all_primes([2, 1]) == [2]
 
 
+def get_longest_prime_digits(lst: int) -> list[int]:
+    """Determina cea mai lunga subsecventa dintr-o lista cu proprietatea
+    ca toate numerele din ea sunt formate doar din cifre prime"""
+    ans = []
+    sequence = []
+
+    for num in lst:
+        num_copy = num
+        ok = True
+        while num > 0:
+            if not is_prime(num % 10):
+                ok = False
+                break
+            num //= 10
+
+        if ok:
+            sequence.append(num_copy)
+        else:
+            if len(sequence) > len(ans):
+                ans = sequence
+            sequence = []
+
+    # edge case, sequence is at the end of the list
+    if len(sequence) > len(ans):
+        ans = sequence
+
+    return ans
+
+
+def test_get_longest_prime_digits():
+    assert get_longest_prime_digits([9]) == []
+    assert get_longest_prime_digits([1, 2, 3, 4]) == [2, 3]
+    assert get_longest_prime_digits([99]) == []
+    assert get_longest_prime_digits([10]) == []
+    assert get_longest_prime_digits([33, 44, 12, 22, 32, 31]) == [22, 32]
+
+
 def input_list():
     raw_data = input("Introduceți o listă de numere: ")
     str_list = raw_data.split()
@@ -69,6 +106,7 @@ Meniu:
 i. Citire date.
 
 1. Determina cea mai lunga subsecventa in care toate nr sunt prime.
+2. Determina cea mai lunga subsecventa in care toate nr au cifre prime.
 
 m. Afișare meniu.
 x. Ieșire.
@@ -80,6 +118,7 @@ x. Ieșire.
 def run_tests():
     test_is_prime()
     test_get_longest_all_primes()
+    test_get_longest_prime_digits()
 
 
 def main():
@@ -99,6 +138,8 @@ def main():
 
         elif option == "1":
             print(get_longest_all_primes(lst))
+        elif option == "2":
+            print(get_longest_prime_digits(lst))
 
         else:
             print("Opțiune inexistentă!")
