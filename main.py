@@ -23,6 +23,35 @@ def test_is_prime():
     assert is_prime(6) is False
 
 
+def get_longest_all_primes(lst: list[int]) -> list[int]:
+    """Determina cea mai lunga subsecventa dintr-o lista data cu proprietatea
+    ca toate numerele din ea sunt prime."""
+    ans = []
+    sequence = []
+
+    for num in lst:
+        if is_prime(num):
+            sequence.append(num)
+        else:
+            if len(sequence) > len(ans):
+                ans = sequence
+            sequence = []
+
+    # edge case, sequence is at the end of the list
+    if len(sequence) > len(ans):
+        ans = sequence
+
+    return ans
+
+
+def test_get_longest_all_primes():
+    assert get_longest_all_primes([1, 2, 3]) == [2, 3]
+    assert get_longest_all_primes([]) == []
+    assert get_longest_all_primes([1]) == []
+    assert get_longest_all_primes([3, 3, 3, 3, 1, 2]) == [3, 3, 3, 3]
+    assert get_longest_all_primes([2, 1]) == [2]
+
+
 def input_list():
     raw_data = input("Introduceți o listă de numere: ")
     str_list = raw_data.split()
@@ -39,6 +68,8 @@ def print_menu():
 Meniu:
 i. Citire date.
 
+1. Determina cea mai lunga subsecventa in care toate nr sunt prime.
+
 m. Afișare meniu.
 x. Ieșire.
     """
@@ -48,6 +79,7 @@ x. Ieșire.
 
 def run_tests():
     test_is_prime()
+    test_get_longest_all_primes()
 
 
 def main():
@@ -64,6 +96,9 @@ def main():
             break
         elif option == "i":
             lst = input_list()
+
+        elif option == "1":
+            print(get_longest_all_primes(lst))
 
         else:
             print("Opțiune inexistentă!")
