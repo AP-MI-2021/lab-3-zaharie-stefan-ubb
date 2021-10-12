@@ -89,6 +89,35 @@ def test_get_longest_prime_digits():
     assert get_longest_prime_digits([33, 44, 12, 22, 32, 31]) == [22, 32]
 
 
+def get_longest_all_evens(lst: list[int]) -> list[int]:
+    """Determina cea mai lunga subsecventa dintr-o lista cu proprietatea
+    ca toate numerele sunt pare."""
+    ans = []
+    sequence = []
+
+    for num in lst:
+        if num % 2 == 0:
+            sequence.append(num)
+        else:
+            if len(sequence) > len(ans):
+                ans = sequence
+            sequence = []
+
+    # edge case, sequence is at the end of the list
+    if len(sequence) > len(ans):
+        ans = sequence
+
+    return ans
+
+
+def test_get_longest_all_evens():
+    assert get_longest_all_evens([2]) == [2]
+    assert get_longest_all_evens([3, 2, 3, 4, 4, 12]) == [4, 4, 12]
+    assert get_longest_all_evens([]) == []
+    assert get_longest_all_evens([1]) == []
+    assert get_longest_all_evens([0, 123127632]) == [0, 123127632]
+
+
 def input_list():
     raw_data = input("Introduceți o listă de numere: ")
     str_list = raw_data.split()
@@ -107,6 +136,7 @@ i. Citire date.
 
 1. Determina cea mai lunga subsecventa in care toate nr sunt prime.
 2. Determina cea mai lunga subsecventa in care toate nr au cifre prime.
+3. Determina cea mai lunga subsecventa in care toate nr sunt pare.
 
 m. Afișare meniu.
 x. Ieșire.
@@ -119,6 +149,7 @@ def run_tests():
     test_is_prime()
     test_get_longest_all_primes()
     test_get_longest_prime_digits()
+    test_get_longest_all_evens()
 
 
 def main():
@@ -140,6 +171,8 @@ def main():
             print(get_longest_all_primes(lst))
         elif option == "2":
             print(get_longest_prime_digits(lst))
+        elif option == "3":
+            print(get_longest_all_evens(lst))
 
         else:
             print("Opțiune inexistentă!")
